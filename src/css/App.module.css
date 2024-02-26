@@ -19,6 +19,9 @@ ul {
 .main {
     max-width: 1240px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-column-gap: 40px;
 }
 
 
