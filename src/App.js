@@ -1,31 +1,38 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import AppHeader from "./components/AppHeader/AppHeader";
 import BurgerIngredients from "./components/BurgerIngredients/BurgerIngredients";
 import BurgerConstructor from "./components/BurgerConstructor/BurgerConstructor";
+
 import styles from "./css/App.module.css";
 
 function App() {
+  const URL_API = 'https://norma.nomoreparties.space/api/ingredients'
   const [items, setItems] = useState(null);
 
   useEffect(() => {
-    fetch("https://norma.nomoreparties.space/api/ingredients")
+    fetch(URL_API)
       .then((res) => {
         return res.json();
       })
-      .then((arr) => {
-        setItems(arr.data);
+      .then((data) => {
+        setItems(data.data);
       })
       .catch(err => {
-        console.log('error' + err)
+        console.log(err.message)
       })
   }, []);
 
   return (
-    <div>
+    <div className={styles.app}>
       <AppHeader />
       <div className={styles.main}>
-        <div className={styles.left}>{items && <BurgerIngredients items={items} />}</div>
-        <div className="mt-25">{items && <BurgerConstructor items={items} />}</div>
+        <div style={{ display: "flex", columnCount: "2", columnGap: "40px" }}>
+          {items && <BurgerIngredients items={items} />}
+
+          <div style={{ marginTop: "100px" }}>
+            {items && <BurgerConstructor items={items} />}
+          </div>
+        </div>
       </div>
     </div>
   );
